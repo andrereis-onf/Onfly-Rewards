@@ -26,3 +26,5 @@ Thumbs.db
 /node-compile-cache
 *.postman_collection.json
 .claude/
+.vercel
+.env*.local
