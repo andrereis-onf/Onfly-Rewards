@@ -27,28 +27,30 @@ class WalletController extends Controller
             ])
             : collect();
 
-        $bookings = $user->bookings()
-            ->orderByDesc('created_at')
-            ->get()
-            ->map(fn($b) => [
-                'id'                   => $b->id,
-                'provider_name'        => $b->provider_name,
-                'destination'          => $b->destination_city . ' - ' . $b->destination_state,
-                'paid_price'           => $b->paid_price,
-                'onhappy_coins_amount' => $b->onhappy_coins_amount,
-                'company_savings'      => $b->company_savings,
-                'savings_total'        => $b->savings_total,
-                'check_in'             => $b->check_in?->format('d/m/Y'),
-                'check_out'            => $b->check_out?->format('d/m/Y'),
-                'status'               => $b->status,
-                'created_at'           => $b->created_at->format('d/m/Y'),
-                'has_onhappy_coins'    => $b->onhappy_coins_amount > 0,
-            ]);
+        $bookingRows = $user->bookings()->orderByDesc('created_at')->get();
+
+        // Balance = sum of all coins earned across bookings (source of truth for display)
+        $totalCoins = round($bookingRows->sum('onhappy_coins_amount'), 2);
+
+        $bookings = $bookingRows->map(fn($b) => [
+            'id'                   => $b->id,
+            'provider_name'        => $b->provider_name,
+            'destination'          => $b->destination_city . ' - ' . $b->destination_state,
+            'paid_price'           => $b->paid_price,
+            'onhappy_coins_amount' => $b->onhappy_coins_amount,
+            'company_savings'      => $b->company_savings,
+            'savings_total'        => $b->savings_total,
+            'check_in'             => $b->check_in?->format('d/m/Y'),
+            'check_out'            => $b->check_out?->format('d/m/Y'),
+            'status'               => $b->status,
+            'created_at'           => $b->created_at->format('d/m/Y'),
+            'has_onhappy_coins'    => $b->onhappy_coins_amount > 0,
+        ]);
 
         return response()->json([
             'wallet'       => [
                 'id'      => $wallet?->id,
-                'balance' => $wallet?->balance ?? '0.00',
+                'balance' => $totalCoins,
             ],
             'transactions' => $transactions,
             'bookings'     => $bookings,

@@ -2,14 +2,9 @@
   <header class="fixed top-0 left-0 right-0 z-50 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6">
     <!-- Left: Logo + page title slot -->
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
-          <span class="text-white text-xs font-bold">O</span>
-        </div>
-        <span class="text-sm font-semibold text-slate-900 font-display" style="font-family: var(--font-display)">Onfly Rewards</span>
+      <div class="flex items-center">
+        <img :src="'/onfly-logo.svg'" alt="Onfly Rewards" class="h-7 w-auto" />
       </div>
-      <div class="w-px h-5 bg-slate-200" />
-      <slot name="title" />
     </div>
 
     <!-- Right: User info + logout -->
@@ -17,11 +12,6 @@
       <div class="text-right hidden sm:block">
         <p class="text-sm font-medium text-slate-800 leading-tight">{{ user?.name }}</p>
         <p class="text-xs text-slate-500 leading-tight">{{ user?.position || user?.role }}</p>
-      </div>
-
-      <!-- Avatar -->
-      <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-sm font-semibold">
-        {{ initials }}
       </div>
 
       <!-- Logout button -->

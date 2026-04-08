@@ -42,12 +42,7 @@ const routes = [
     component: () => import('../pages/approver/DashboardPage.vue'),
     meta: { requiresAuth: true, role: 'approver' }
   },
-  {
-    path: '/approver/ranking',
-    name: 'approver.ranking',
-    component: () => import('../pages/approver/RankingPage.vue'),
-    meta: { requiresAuth: true, role: 'approver' }
-  },
+  { path: '/approver/ranking', redirect: '/approver/dashboard' },
   // Catch-all redirect
   {
     path: '/:pathMatch(.*)*',

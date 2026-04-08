@@ -23,12 +23,13 @@ const props = defineProps({
   iconColor:  { type: String, default: 'text-blue-600' },
   valueColor: { type: String, default: 'text-slate-900' },
   subtitle:   { type: String, default: '' },
+  suffix:     { type: String, default: '' },
 })
 
 const displayValue = computed(() => {
   if (props.format === 'currency') {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(props.value)
   }
-  return props.value.toString()
+  return props.value.toString() + props.suffix
 })
 </script>

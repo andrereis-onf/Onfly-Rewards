@@ -1,6 +1,6 @@
 <template>
   <!-- Desktop sidebar -->
-  <aside class="fixed left-0 top-16 bottom-0 w-60 bg-white border-r border-slate-200 flex flex-col py-4 z-40">
+  <aside class="w-60 shrink-0 sticky top-0 h-[calc(100vh-4rem)] bg-white border-r border-slate-200 flex flex-col py-4 z-40 overflow-y-auto">
     <!-- Brand accent bar -->
     <div class="mx-3 mb-3 h-0.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 opacity-60" />
 
@@ -33,7 +33,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Search, Wallet, BarChart2, Trophy } from 'lucide-vue-next'
+import { Search, Wallet, BarChart2 } from 'lucide-vue-next'
 
 const props = defineProps({
   role: {
@@ -45,13 +45,12 @@ const props = defineProps({
 const route = useRoute()
 
 const travelerItems = [
-  { to: '/traveler/search', label: 'Buscar Hotel', icon: Search },
+  { to: '/traveler/search', label: 'Hospedagens', icon: Search },
   { to: '/traveler/wallet', label: 'Minha Carteira', icon: Wallet },
 ]
 
 const approverItems = [
   { to: '/approver/dashboard', label: 'Dashboard de Economia', icon: BarChart2 },
-  { to: '/approver/ranking', label: 'Ranking de Economia', icon: Trophy },
 ]
 
 const navItems = computed(() => props.role === 'traveler' ? travelerItems : approverItems)

@@ -25,8 +25,8 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    async login(email, password) {
-      const response = await axios.post('/login', { email, password })
+    async login(name, role) {
+      const response = await axios.post('/login', { name, role })
       const { token, user } = response.data
 
       // Store token and set as default header

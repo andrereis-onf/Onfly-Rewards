@@ -1,6 +1,6 @@
 <template>
   <AppShell>
-    <div class="max-w-2xl mx-auto space-y-6">
+    <div class="w-full space-y-6">
       <!-- Balance -->
       <WalletBalance :balance="wallet?.balance ?? 0" />
 
@@ -34,7 +34,7 @@
             to="/traveler/search"
             class="px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all"
           >
-            Buscar hotel
+            Buscar hospedagem
           </RouterLink>
         </div>
 

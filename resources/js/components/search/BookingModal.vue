@@ -48,7 +48,6 @@
                 </div>
                 <div>
                   <p class="text-sm font-semibold text-green-700">Você ganha onhappy coins na sua carteira!</p>
-                  <p class="text-xs text-green-600">Você ganha OnhappyCoins na sua carteira</p>
                 </div>
               </div>
               <span class="text-2xl font-bold text-green-700 font-mono">{{ result.onhappy_coins_amount }}</span>

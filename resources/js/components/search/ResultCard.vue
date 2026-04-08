@@ -31,6 +31,10 @@
             {{ formatCurrency(result.price) }}
           </p>
           <p class="text-xs text-slate-400 mt-0.5">{{ priceLabel }}</p>
+          <p v-if="result.nights > 1" class="text-sm font-semibold text-slate-600 font-mono mt-1">
+            {{ formatCurrency(result.price * result.nights) }}
+            <span class="text-xs font-normal text-slate-400">total ({{ result.nights }} diárias)</span>
+          </p>
         </div>
       </div>
 

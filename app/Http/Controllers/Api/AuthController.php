@@ -3,28 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:traveler,approver',
         ]);
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Email ou senha incorretos.'], 422);
+        $user = User::where('role', $data['role'])->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Nenhum usuário encontrado para este perfil.'], 422);
         }
 
-        $user = Auth::user();
+        $user->update(['name' => $data['name']]);
+
         $token = $user->createToken('spa-token')->plainTextToken;
 
         return response()->json([
             'token' => $token,
-            'user' => $user->only(['id', 'name', 'email', 'role', 'company_id', 'department', 'position']),
+            'user'  => $user->only(['id', 'name', 'email', 'role', 'company_id', 'department', 'position']),
         ]);
     }
 

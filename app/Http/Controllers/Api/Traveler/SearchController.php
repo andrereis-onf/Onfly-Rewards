@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Traveler;
 use App\Http\Controllers\Controller;
 use App\Models\TravelPolicy;
 use App\Services\MockDataGenerator;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -29,13 +30,18 @@ class SearchController extends Controller
 
         $raw = app(MockDataGenerator::class)->generate('hotel', $data['destination_city'], $policyMax);
 
-        $results = collect($raw)->map(function ($r) use ($policyMax) {
+        $checkIn  = $data['check_in'];
+        $checkOut = $data['check_out'] ?? $data['check_in'];
+        $nights   = max(1, \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut)));
+
+        $results = collect($raw)->map(function ($r) use ($policyMax, $nights) {
             $savings      = $r['price'] < $policyMax
-                ? round($policyMax - $r['price'], 2)
+                ? round(($policyMax - $r['price']) * $nights, 2)
                 : 0;
             $onhappyCoins = round($savings * 0.5, 2);
 
             return array_merge($r, [
+                'nights'               => $nights,
                 'original_price'       => $r['price'],
                 'has_onhappy_coins'    => $onhappyCoins >= 1.0,
                 'onhappy_coins_amount' => $onhappyCoins,

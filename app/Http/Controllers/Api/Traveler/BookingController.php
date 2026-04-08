@@ -32,13 +32,19 @@ class BookingController extends Controller
             : null;
 
         $teto = match($data['modal']) {
-            'hotel'  => $policy?->max_daily_hotel,
+            'hotel'  => $policy?->max_daily_hotel ?? 750.00,
             'flight' => $policy?->max_flight,
             default  => null,
         };
 
+        $checkIn  = $data['check_in'];
+        $checkOut = $data['check_out'] ?? $data['check_in'];
+        $nights   = max(1, \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut)));
+
         // Calculate split
-        $savings       = ($teto && $data['paid_price'] < $teto) ? round($teto - $data['paid_price'], 2) : 0;
+        $savings = ($teto && $data['paid_price'] < $teto)
+            ? round(($teto - $data['paid_price']) * $nights, 2)
+            : 0;
         $onhappyCoins  = round($savings * 0.5, 2);
         $companySavings = round($savings * 0.5, 2);
 

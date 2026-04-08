@@ -7,15 +7,18 @@
       </template>
     </TheHeader>
 
-    <!-- Sidebar -->
-    <TheSidebar :role="auth.role" />
+    <!-- Body: sidebar + main -->
+    <div class="flex pt-16 min-h-screen">
+      <!-- Sidebar -->
+      <TheSidebar :role="auth.role" />
 
-    <!-- Main content -->
-    <main class="ml-60 pt-16 min-h-screen">
-      <div class="p-8">
-        <slot />
-      </div>
-    </main>
+      <!-- Main content — flex-1 ocupa todo o espaço restante -->
+      <main class="flex-1 min-w-0">
+        <div class="w-[95%] mx-auto py-6">
+          <slot />
+        </div>
+      </main>
+    </div>
 
     <!-- Mobile overlay (when sidebar is open) -->
     <!-- Mobile support: sidebar is always visible on desktop -->
@@ -33,10 +36,9 @@ const auth = useAuthStore()
 const route = useRoute()
 
 const pageTitles = {
-  'traveler.search': 'Buscar Hotel',
+  'traveler.search': 'Hospedagens',
   'traveler.wallet': 'Minha Carteira',
   'approver.dashboard': 'Dashboard de Economia',
-  'approver.ranking': 'Ranking de Economia',
 }
 
 const pageTitle = computed(() => pageTitles[route.name] || '')

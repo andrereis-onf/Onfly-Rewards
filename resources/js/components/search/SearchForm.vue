@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-    <h2 class="text-lg font-semibold text-slate-900 mb-5" style="font-family: var(--font-display); letter-spacing: -0.02em;">Buscar Hotel</h2>
+    <h2 class="text-lg font-semibold text-slate-900 mb-5" style="font-family: var(--font-display); letter-spacing: -0.02em;">Hospedagens</h2>
 
     <form @submit.prevent="handleSearch" class="space-y-4">
       <!-- Destination -->
@@ -48,7 +48,7 @@
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 6.477 0 12h4zm2 9.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
         </svg>
         <Search v-else class="w-4 h-4" />
-        {{ store.loading ? 'Buscando...' : 'Buscar hotéis' }}
+        {{ store.loading ? 'Buscando...' : 'Buscar hospedagens' }}
       </button>
     </form>
   </div>

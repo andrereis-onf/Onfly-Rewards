@@ -1,6 +1,6 @@
 <template>
   <AppShell>
-    <div class="max-w-3xl mx-auto space-y-6">
+    <div class="w-full space-y-6">
       <!-- Search Form -->
       <SearchForm />
 
@@ -33,13 +33,15 @@
           </span>
         </div>
 
-        <ResultCard
-          v-for="result in search.results"
-          :key="result.id"
-          :result="result"
-          :policy="search.policy"
-          @select="search.selectResult(result)"
-        />
+        <div class="space-y-4">
+          <ResultCard
+            v-for="result in search.results"
+            :key="result.id"
+            :result="result"
+            :policy="search.policy"
+            @select="search.selectResult(result)"
+          />
+        </div>
       </div>
 
       <!-- Empty state after search -->
@@ -50,12 +52,6 @@
         <p class="text-sm text-slate-500">Tente outro destino ou outras datas.</p>
       </div>
 
-      <!-- Initial state (no search yet) -->
-      <div v-else-if="!search.loading && !search.destination"
-           class="text-center py-16 text-slate-400">
-        <div class="text-5xl mb-4">🏨</div>
-        <p class="text-sm">Preencha os campos acima e clique em <strong class="text-slate-600">Buscar hotéis</strong></p>
-      </div>
     </div>
 
     <!-- Booking Modal -->

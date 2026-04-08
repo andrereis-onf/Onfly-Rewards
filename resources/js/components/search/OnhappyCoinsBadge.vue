@@ -26,8 +26,7 @@
                 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-10 shadow-xl">
       <p class="font-semibold text-green-400 mb-2">✦ Seus onhappy coins</p>
       <p class="text-slate-300">
-        Seus onhappy coins: {{ coinsAmount }} |
-        Empresa economiza: {{ formatCurrency(savingsTotal) }}
+        ✦ {{ coinsAmount }} onhappy coins serão creditados na sua carteira ao confirmar esta reserva.
       </p>
       <!-- Arrow -->
       <div class="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-slate-900"></div>
@@ -38,11 +37,6 @@
 <script setup>
 const props = defineProps({
   coinsAmount:   { type: Number, required: true },
-  savingsTotal:  { type: Number, required: true },
   companyAmount: { type: Number, default: 0 },
 })
-
-function formatCurrency(value) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
-}
 </script>
